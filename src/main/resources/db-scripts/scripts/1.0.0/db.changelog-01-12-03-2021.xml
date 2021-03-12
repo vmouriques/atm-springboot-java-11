@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1" author="Vinicius">
+        <createTable tableName="tb_cliente">
+            <column name="id_cliente" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome_cliente" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cpf_cliente" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_conta_corrente" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Vinicius">
+        <createTable tableName="tb_conta_corrente">
+            <column name="id_conta_corrente" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="agencia" type="varchar(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="conta" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="saldo" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Vinicius">
+        <createTable tableName="tb_transacao">
+            <column name="id_transacao" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="data_hora_transacao" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_transacao_enum" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_conta_corrente" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="Vinicius">
+        <insert tableName="tb_cliente" dbms="mysql">
+            <column name="nome_cliente" value="Vinicius Matos Ouriques"/>
+            <column name="cpf_cliente" value="783.022.410-24"/>
+            <column name="id_conta_corrente" value="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="Vinicius">
+        <insert tableName="tb_conta_corrente" dbms="mysql">
+            <column name="agencia" value="5092"/>
+            <column name="conta" value="0207181-9"/>
+            <column name="saldo" value="5000"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="6" author="Vinicius">
+        <insert tableName="tb_cliente" dbms="mysql">
+            <column name="nome_cliente" value="Maria da Silva"/>
+            <column name="cpf_cliente" value="867.952.170-19"/>
+            <column name="id_conta_corrente" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7" author="Vinicius">
+        <insert tableName="tb_conta_corrente" dbms="mysql">
+            <column name="agencia" value="5031"/>
+            <column name="conta" value="165462-4"/>
+            <column name="saldo" value="10000"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="8" author="Vinicius" >
+        <addForeignKeyConstraint baseColumnNames="id_conta_corrente"
+                                 baseTableName="tb_cliente"
+                                 constraintName="fk_conta_corrente_cliente"
+                                 referencedColumnNames="id_conta_corrente"
+                                 referencedTableName="tb_conta_corrente"/>
+    </changeSet>
+
+    <changeSet id="9" author="Vinicius" >
+        <addForeignKeyConstraint baseColumnNames="id_conta_corrente"
+                                 baseTableName="tb_transacao"
+                                 constraintName="fk_conta_corrente_transacao"
+                                 referencedColumnNames="id_conta_corrente"
+                                 referencedTableName="tb_conta_corrente"/>
+    </changeSet>
+
+</databaseChangeLog>
