@@ -1,11 +1,14 @@
 package br.com.matos.atm.db.entities;
 
 import br.com.matos.atm.db.entities.enums.TipoTransacaoEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -26,9 +29,15 @@ public class TransacaoEntity implements Serializable {
     @Enumerated
     private TipoTransacaoEnum tipoTransacaoEnum;
 
-    private Instant dataHoraTransacao;
+    private ZonedDateTime dataHoraTransacao;
 
     @ManyToOne
     @JoinColumn(name = "id_conta_corrente")
     private ContaCorrenteEntity contaCorrenteEntity;
+
+    @PrePersist
+    @PreUpdate
+    void dataHoraTransacao() {
+        this.dataHoraTransacao = Instant.now().atZone(ZoneId.of("America/Sao_Paulo"));
+    }
 }
