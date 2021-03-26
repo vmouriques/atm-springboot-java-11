@@ -2,10 +2,10 @@ package br.com.matos.atm.db.entities.enums;
 
 public enum TipoCedulaEnum {
 
-    CEDULA10(10),
-    CEDULA20(20),
+    CEDULA100(100),
     CEDULA50(50),
-    CEDULA100(100);
+    CEDULA20(20),
+    CEDULA10(10);
 
     private Integer valorCedula;
 

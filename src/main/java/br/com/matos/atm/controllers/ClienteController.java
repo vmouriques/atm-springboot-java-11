@@ -5,6 +5,7 @@ import br.com.matos.atm.dto.ClienteDto;
 import br.com.matos.atm.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +18,19 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<Data<ClienteDto>> cadastraCliente(
-            @RequestHeader HttpHeaders headers,
             @RequestBody ClienteDto clienteDto){
 
-        return service.cadastraCliente(clienteDto, headers);
+        service.cadastraCliente(clienteDto);
+
+        return new ResponseEntity<>(new Data<>(clienteDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id_cliente}")
-    public ResponseEntity<Data<Object>> buscaClientePorId(
-            @RequestHeader HttpHeaders headers,
+    public ResponseEntity<Data<ClienteDto>> buscaClientePorId(
             @PathVariable("id_cliente") Long idCliente) {
 
-        return service.buscaClientePorId(idCliente);
+        ClienteDto clienteDto = service.buscaClientePorId(idCliente);
+
+        return new ResponseEntity<>(new Data<>(clienteDto), HttpStatus.OK);
     }
 }
