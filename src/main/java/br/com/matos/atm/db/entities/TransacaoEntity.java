@@ -1,7 +1,6 @@
 package br.com.matos.atm.db.entities;
 
 import br.com.matos.atm.db.entities.enums.TipoTransacaoEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
